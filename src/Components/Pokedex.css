@@ -1,0 +1,106 @@
+#pokedex {
+    display: flex;
+    justify-content: center;
+}
+
+#leftPokedex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #dc082e;
+    border: 5px solid black;
+    height: 500px;
+    width: 450px;
+}
+
+#rightPokedex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #dc082e;
+    border: 5px solid black;
+    border-left: none;
+    height: 500px;
+    width: 450px;
+}
+
+.pokemonDisplay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    background-color: #f2f2f2;
+    height: 40%;
+    width: 55%;
+    border: 20px solid #dedede;
+}
+
+#pokemonImage {
+    height: 80%;
+    width: 80%;
+}
+
+.navigation {
+    display: flex;
+}
+
+#previousButton {
+
+    background-color: yellow;
+    color: red;
+}
+
+#nextButton {
+    background-color: yellow;
+    color: red
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 20%;
+    margin: 5%;
+    margin-top: 100px;
+    padding: 5%;
+    font-size: 100%;
+    border-radius: 1vh;
+    background-color: #232323;
+    color: white;
+}
+
+.types { 
+    margin-bottom: 2vh;
+}
+
+#type1 {
+    border: 1px solid #232323;
+    padding: 2%;
+}
+
+#type2 {
+    border: 1px solid #232323;
+    padding: 2%;
+}
+
+#generationButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 400px;
+}
+
+.generationButtonsClass {
+    padding: 2%;
+    background-color: #29aafd;
+    color: white;
+    transition: all 1s ease;
+    box-shadow: 5px 3px 3px black;
+}
+
+.generationButtonsClass:hover {
+    background-color: red;
+    cursor: pointer;
+}

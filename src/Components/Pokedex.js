@@ -10,6 +10,7 @@ const Pokedex = () => {
     const [pokemonId, setPokemonId] = useState(initialPokemonId);
     const [name, setName] = useState();
     const [image, setImage] = useState();
+    const [shinyImage, setShinyImage] = useState();
     const [type1, setType1] = useState();
     const [type2, setType2] = useState();
     const [flavorText, setFlavorText] = useState();
@@ -22,33 +23,45 @@ const Pokedex = () => {
     const fetchPokemon = async () => {
 
         if (pokemonId < 1 || pokemonId > 899) {
+            // alert("Pokemon does not exist")
             return false
         } 
+
+
 
         try {
             const response = await fetch(baseURL);
             const result = await response.json();
-            console.log(result);
+            // console.log(result);
             const resultName = result.name;
             const name = resultName[0].toUpperCase() + resultName.slice(1);
-            console.log(name);
+            // console.log(name);
             setName(name);
+
             const image = result.sprites.front_default;
             console.log(image);
-            setImage(image);;
+            setImage(image);
 
-            const resultMove = result.moves;
-            console.log(resultMove);
+            const shinyImage = result.sprites.front_shiny;
+            console.log(shinyImage)
+            setShinyImage(shinyImage)
+
+            const moves = result.moves;
+            console.log(moves);
+            moves.map((move) => {
+                console.log(move.name)
+            })
+            
 
             const resultType1 = result.types[0].type.name;
             const type1 = resultType1[0].toUpperCase() + resultType1.slice(1);
-            console.log(type1);
+            // console.log(type1);
             setType1(type1);
 
             const specificResponse = await fetch(speciesEndpoint)
             const specificResult = await specificResponse.json()
             const flavorText = specificResult.flavor_text_entries[0].flavor_text;
-            console.log(flavorText)
+            // console.log(flavorText)
             setFlavorText(flavorText)
 
             if (!result.types[1].type.name) {
@@ -79,15 +92,23 @@ const Pokedex = () => {
                     <div id="pokemonName">#{pokemonId} {name}</div>
                 </div>
 
-                <button id="randomPokemon" onClick={() => setPokemonId(Math.floor(Math.random() * 900))}>Random Pokemon</button>
+                <button id="randomPokemon" onClick={() => setPokemonId(Math.floor(Math.random() * 898))}>Random Pokemon</button>
 
                 <div className="navigation">
-                    <input type="number" name="search" placeholder="Search" value={searchTerm} onChange={(event) => {
+                    <input type="number" name="search" placeholder="Search" min="1" max="898" value={searchTerm} onChange={(event) => {
                         setPokemonId(event.target.value);
                         setSearchParams({searchTerm: event.target.value})
                     }}/>
                     <button id="previousButton" onClick={() => setPokemonId(pokemonId - 1)}>Previous Pokemon</button>
                     <button id="nextButton" onClick={() => setPokemonId(pokemonId + 1)}>Next Pokemon</button>
+                </div>
+                <button onClick={() => setImage(shinyImage)}>Shiny Variant</button>
+                <div>
+                    Pokemon Moves to be labeled here:
+                    1: 
+                    2: 
+                    3: 
+                    4:
                 </div>
             </div>
 

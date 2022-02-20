@@ -104,3 +104,21 @@
     background-color: red;
     cursor: pointer;
 }
+
+.shinyToggle {
+    border-radius: 50%;
+    width: auto;
+    height: 50%;
+}
+
+.moves {
+    background-color: #51AE5F;
+    padding: 2%;
+    border: 3px solid black;
+}
+
+.blinkers {
+    display: flex;
+    border: 3px solid black;
+    justify-content: space-evenly;
+}

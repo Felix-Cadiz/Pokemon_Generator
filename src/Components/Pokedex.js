@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom"
-// import { fetchPokemon, fetchPokemonSpecific } from "../util"
 import "./Pokedex.css"
 
 const Pokedex = () => {
@@ -14,6 +13,7 @@ const Pokedex = () => {
     const [type1, setType1] = useState();
     const [type2, setType2] = useState();
     const [flavorText, setFlavorText] = useState();
+    const [moves, setMoves] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
     const searchTerm = searchParams.get("searchTerm")
 
@@ -27,12 +27,10 @@ const Pokedex = () => {
             return false
         } 
 
-
-
         try {
             const response = await fetch(baseURL);
             const result = await response.json();
-            // console.log(result);
+            console.log(result);
             const resultName = result.name;
             const name = resultName[0].toUpperCase() + resultName.slice(1);
             // console.log(name);
@@ -42,16 +40,15 @@ const Pokedex = () => {
             console.log(image);
             setImage(image);
 
+            console.log("SUP BRO!")
+
             const shinyImage = result.sprites.front_shiny;
             console.log(shinyImage)
             setShinyImage(shinyImage)
 
             const moves = result.moves;
             console.log(moves);
-            moves.map((move) => {
-                console.log(move.name)
-            })
-            
+            setMoves(moves)
 
             const resultType1 = result.types[0].type.name;
             const type1 = resultType1[0].toUpperCase() + resultType1.slice(1);
@@ -70,40 +67,66 @@ const Pokedex = () => {
             } else if (result.types[1].type.name) {
                 const resultType2 = result.types[1].type.name;
                 const type2 = resultType2[0].toUpperCase() + resultType2.slice(1);
-                console.log(type2);
+                // console.log(type2);
                 setType2(type2);
             }
 
         } catch (error) {
             let type2 = null
             setType2(type2)
-            console.error("Sad puppy");
+            // console.error("Sad puppy");
         } 
     }
 
-    useEffect(fetchPokemon)
+    useEffect(fetchPokemon, [])
 
     return <>
         <h1> Sup Pokedex</h1>
         <div id="pokedex">
             <div id="leftPokedex">
+                <div>
+                    <div className="blinkers">
+                        <div className="bigBlink">Hello</div>
+                        <div className="redBlink">Red</div>
+                        <div className="yellowBlink">Yellow</div>
+                        <div className="blueBlink">Blue</div>
+                    </div>
+                </div>
                 <div className="pokemonDisplay">
                     <img id="pokemonImage" src={image} alt={name}></img>
                     <div id="pokemonName">#{pokemonId} {name}</div>
                 </div>
 
-                <button id="randomPokemon" onClick={() => setPokemonId(Math.floor(Math.random() * 898))}>Random Pokemon</button>
+                <button id="randomPokemon" onClick={() => {setPokemonId(Math.floor(Math.random() * 898)); fetchPokemon()}}>Random Pokemon</button>
 
                 <div className="navigation">
                     <input type="number" name="search" placeholder="Search" min="1" max="898" value={searchTerm} onChange={(event) => {
                         setPokemonId(event.target.value);
                         setSearchParams({searchTerm: event.target.value})
                     }}/>
-                    <button id="previousButton" onClick={() => setPokemonId(pokemonId - 1)}>Previous Pokemon</button>
-                    <button id="nextButton" onClick={() => setPokemonId(pokemonId + 1)}>Next Pokemon</button>
+                    <button id="previousButton" onClick={() => {
+                        fetchPokemon(pokemonId - 1);
+                        setPokemonId(pokemonId - 1)
+                    }}>Previous Pokemon</button>
+                    <button id="nextButton" onClick={() => {
+                        setPokemonId(pokemonId + 1);
+                        fetchPokemon(pokemonId + 1);
+                        console.log(pokemonId)
+                    }}>Next Pokemon</button>
                 </div>
-                <button onClick={() => setImage(shinyImage)}>Shiny Variant</button>
-                <div>
+                {/* Change to checkbox */}
+                <button className="shinyToggle" onClick={() => {
+                    console.log(shinyImage)   
+                    setImage(shinyImage)
+                }}>Shiny Variant</button>
+                <div className="moves">
+                    {/* {
+                        moves.map((move) => {
+                            return (
+                                <div key={move.id}>{move.move.name}</div>
+                            )
+                        })
+                    } */}
                     Pokemon Moves to be labeled here:
                     1: 
                     2: 

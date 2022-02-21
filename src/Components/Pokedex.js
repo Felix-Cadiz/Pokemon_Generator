@@ -9,7 +9,12 @@ const Pokedex = () => {
     const [pokemonId, setPokemonId] = useState(initialPokemonId);
     const [name, setName] = useState();
     const [image, setImage] = useState();
+    const [baseImage, setBaseImage] = useState();
+    const [backImage, setBackImage] = useState();
     const [shinyImage, setShinyImage] = useState();
+    const [shinyBackImage, setShinyBackImage] = useState();
+    const [isShiny, setIsShiny] = useState(false);
+    const [face, setFace] = useState(true);
     const [type1, setType1] = useState();
     const [type2, setType2] = useState();
     const [flavorText, setFlavorText] = useState();
@@ -33,18 +38,22 @@ const Pokedex = () => {
             console.log(result);
             const resultName = result.name;
             const name = resultName[0].toUpperCase() + resultName.slice(1);
-            // console.log(name);
             setName(name);
 
-            const image = result.sprites.front_default;
-            console.log(image);
-            setImage(image);
 
-            console.log("SUP BRO!")
+            const baseImage = result.sprites.front_default;
+            setBaseImage(baseImage)
+            setImage(baseImage);
+
+            const backImage = result.sprites.back_default;
+            setBackImage(backImage)
 
             const shinyImage = result.sprites.front_shiny;
-            console.log(shinyImage)
             setShinyImage(shinyImage)
+
+            const shinyBackImage = result.sprites.back_shiny;
+            setShinyBackImage(shinyBackImage)
+            
 
             const moves = result.moves;
             console.log(moves);
@@ -76,6 +85,30 @@ const Pokedex = () => {
             setType2(type2)
             // console.error("Sad puppy");
         } 
+    }
+
+    const handleImage = () => {
+        if (!isShiny) {
+            setIsShiny(true)
+            face ? setImage(shinyImage) : setImage(shinyBackImage)
+        } 
+        if (isShiny) {
+            setIsShiny(false);
+            face ? setImage(baseImage) : setImage(backImage)
+        }
+    }
+
+    const handleFace = () => {
+        if (face) {
+            setFace(false)
+            if (isShiny) { setImage (shinyBackImage)}
+            if (!isShiny) { setImage (backImage) }
+        }
+        if (!face) {
+            setFace(true)
+            if (isShiny) { setImage (shinyImage) }
+            if (!isShiny) { setImage (baseImage) }
+        }
     }
 
     useEffect(fetchPokemon, [])
@@ -114,11 +147,12 @@ const Pokedex = () => {
                         console.log(pokemonId)
                     }}>Next Pokemon</button>
                 </div>
-                {/* Change to checkbox */}
                 <button className="shinyToggle" onClick={() => {
-                    console.log(shinyImage)   
-                    setImage(shinyImage)
+                    handleImage()
                 }}>Shiny Variant</button>
+                <button className="faceToggle" onClick={() => {
+                    handleFace()
+                }}>Rotate Pokemon</button>
                 <div className="moves">
                     {/* {
                         moves.map((move) => {
@@ -154,6 +188,10 @@ const Pokedex = () => {
                     <button className="generationButtonsClass" id="generation6" onClick={() => setPokemonId(650)}>Generation 6</button>
                     <button className="generationButtonsClass" id="generation7" onClick={() => setPokemonId(722)}>Generation 7</button>
                     <button className="generationButtonsClass" id="generation8" onClick={() => setPokemonId(810)}>Generation 8</button>
+                </div>
+                <div>
+                    <div> Weight: Height:</div>
+                    <div> Something to put here</div>
                 </div>
             </div>
         </div> 

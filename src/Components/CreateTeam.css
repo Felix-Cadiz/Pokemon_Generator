@@ -1,4 +1,105 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5vh;
+}
 
+.pokeball {
+    width: 20vh;
+    height: 20vh;
+    background: linear-gradient(crimson 50%, white 50%);
+    border-radius: 50%;
+    outline: 0.7vh solid black; 
+    margin-bottom: 0.3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle {
+    width:100%;
+    height:1vh;
+    background-color: black;
+}
+
+.middleCircle {
+    position: absolute;
+    width:5vh;
+    height: 5vh;
+    background: white;
+    border-radius: 50%;
+    outline: 4px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerCircle {
+    width: 2vh;
+    height: 2vh;
+    background: white;
+    border-radius: 50%;
+    outline: 3px solid black;
+}
+
+.shadow {
+    position: relative;
+    top: 0%;
+    background-color: rgba(0,0,0,0.5);
+    height: 1vh;
+    width: 18vh;
+    border-radius: 50%;
+    filter: blur(0.2vh);
+}
+
+.pokeball:hover{ 
+    animation: shake 2s infinite;
+    animation-timing-function: ease-out;
+}
+
+.pokeball:hover .innerCircle{
+    animation: pulse 0.4s infinite;
+}
+
+.pokeball:hover ~ .shadow{
+    animation: follow 2s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    4% { transform: translate(4px, 0px) rotate(3deg); }
+    8% { transform: translate(14px, 0px) rotate(30deg); }
+    12% { transform: translate(-4px, 0px) rotate(-3deg); }
+    16% { transform: translate(-14px, 0px) rotate(-30deg); }
+    40% { transform: translate(0px, 0px) rotate(0deg); }
+    45% { transform: translate(3px, 0px) rotate(3deg); }
+    52% { transform: translate(12px, 0px) rotate(30deg); }
+    59% { transform: translate(-3px, 0px) rotate(-3deg); }
+    63% { transform: translate(-12px, 0px) rotate(-30deg); }
+    95% { transform: translate(0px, 0px) rotate(0deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes pulse {
+    from {background-color: red;}
+    to {color: inherit;}
+}
+
+@keyframes follow {
+    0% { transform: translate(0px, 0px)}
+    4% { transform: translate(4px, 0px)}
+    8% { transform: translate(14px, 0px)}
+    12% { transform: translate(-4px, 0px)}
+    16% { transform: translate(-14px, 0px)}
+    40% { transform: translate(0px, 0px)}
+    45% { transform: translate(3px, 0px)}
+    52% { transform: translate(12px, 0px)}
+    59% { transform: translate(-3px, 0px)}
+    63% { transform: translate(-12px, 0px)}
+    95% { transform: translate(0px, 0px)}
+    100% { transform: translate(0px, 0px)}
+}
 
 .pokeball:hover{
     cursor: pointer;

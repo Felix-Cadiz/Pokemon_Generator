@@ -9,7 +9,9 @@ const CreateTeam = () => {
     <button> Gym Leader </button>
 
     <div className="body">
-            <div className="container">
+            <div className="container" onClick={() => {
+                console.log("hello")
+            }}>
                 <div className="pokeball">
                     <div className="middle"></div>
                     <div className="middleCircle">

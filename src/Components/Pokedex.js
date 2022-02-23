@@ -4,9 +4,10 @@ import "./Pokedex.css"
 
 const Pokedex = () => {
 
-    const initialPokemonId = 1;
+    const [searchParams, setSearchParams] = useSearchParams()
+    const searchTerm = searchParams.get("searchTerm")
     
-    const [pokemonId, setPokemonId] = useState(initialPokemonId);
+    const [pokemonId, setPokemonId] = useState(Number(searchTerm || 1));
     const [name, setName] = useState();
     const [image, setImage] = useState();
     const [baseImage, setBaseImage] = useState();
@@ -21,8 +22,6 @@ const Pokedex = () => {
     const [height, setHeight] = useState();
     const [flavorText, setFlavorText] = useState();
     const [moves, setMoves] = useState();
-    const [searchParams, setSearchParams] = useSearchParams()
-    const searchTerm = searchParams.get("searchTerm")
 
     const baseURL = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
     const speciesEndpoint = `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`
@@ -116,7 +115,14 @@ const Pokedex = () => {
         }
     }
 
-    useEffect(fetchPokemon, [pokemonId])
+    const handleRandomPokemon = () => {
+        let randomPokemonId = Math.floor(Math.random() * 898);
+        setPokemonId(randomPokemonId); 
+        setSearchParams({searchTerm: randomPokemonId});
+        fetchPokemon();
+    }
+
+    useEffect(fetchPokemon, [pokemonId])  
 
     return <>
         <h1> Sup Pokedex</h1>
@@ -134,11 +140,8 @@ const Pokedex = () => {
                     <img id="pokemonImage" src={image} alt={name}></img>
                     <div id="pokemonName">#{pokemonId} {name}</div>
                 </div>
-{/* One step behind */}
                 <button id="randomPokemon" onClick={() => {
-                    setPokemonId(Math.floor(Math.random() * 898)); 
-                    setSearchParams({searchTerm: pokemonId});
-                    fetchPokemon();
+                    handleRandomPokemon()
                     }}>Random Pokemon</button>
 
                 <div className="navigation">
@@ -147,17 +150,23 @@ const Pokedex = () => {
                         setSearchParams({searchTerm: event.target.value})
                         fetchPokemon()
                     }}/>
-{/* One step behind */}
                     <button id="previousButton" onClick={() => {
-                        setPokemonId(pokemonId - 1)
-                        setSearchParams({searchTerm: pokemonId});
-                        fetchPokemon(pokemonId - 1);
+                        if (pokemonId > 1) {
+                            setPokemonId(pokemonId - 1)
+                            setSearchParams({searchTerm: pokemonId - 1});
+                            fetchPokemon(pokemonId);
+                        } else {
+                            return false
+                        }
                     }}>Previous Pokemon</button>
-{/* One step behind */}
                     <button id="nextButton" onClick={() => {
-                        setPokemonId(pokemonId + 1);
-                        setSearchParams({searchTerm: pokemonId});
-                        fetchPokemon(pokemonId + 1);
+                        if (pokemonId < 898) {
+                            setPokemonId(pokemonId + 1);
+                            setSearchParams({searchTerm: pokemonId + 1});
+                            fetchPokemon(pokemonId);
+                        } else {
+                            return false
+                        }
                     }}>Next Pokemon</button>
                 </div>
                 <div className="moves">

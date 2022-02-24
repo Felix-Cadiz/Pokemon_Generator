@@ -29,7 +29,6 @@ const Pokedex = () => {
     const fetchPokemon = async () => {
 
         if (pokemonId < 1 || pokemonId > 899) {
-            // alert("Pokemon does not exist")
             return false
         } 
 
@@ -38,7 +37,6 @@ const Pokedex = () => {
             setFace(true);
             const response = await fetch(baseURL);
             const result = await response.json();
-            console.log(result);
             const resultName = result.name;
             const name = resultName[0].toUpperCase() + resultName.slice(1);
             setName(name);
@@ -59,8 +57,8 @@ const Pokedex = () => {
             
 
             const resultMoves = result.moves;
-            console.log(resultMoves);
-            setMoves(resultMoves)
+            const slicedMoves = resultMoves.slice(0, 4)
+            setMoves(slicedMoves)
 
             const specificResponse = await fetch(speciesEndpoint)
             const specificResult = await specificResponse.json()
@@ -146,6 +144,7 @@ const Pokedex = () => {
 
                 <div className="navigation">
                     <input type="number" name="search" placeholder="Search" min="1" max="898" value={searchTerm} onChange={(event) => {
+                        if (event.target.value < 0 || event.target.value >= 899) { return false }
                         setPokemonId(event.target.value);
                         setSearchParams({searchTerm: event.target.value})
                         fetchPokemon()
@@ -155,34 +154,25 @@ const Pokedex = () => {
                             setPokemonId(pokemonId - 1)
                             setSearchParams({searchTerm: pokemonId - 1});
                             fetchPokemon(pokemonId);
-                        } else {
-                            return false
-                        }
+                        } 
                     }}>Previous Pokemon</button>
                     <button id="nextButton" onClick={() => {
                         if (pokemonId < 898) {
-                            setPokemonId(pokemonId + 1);
-                            setSearchParams({searchTerm: pokemonId + 1});
+                            setPokemonId(Number(pokemonId) + 1);
+                            setSearchParams({searchTerm: Number(pokemonId) + 1});
                             fetchPokemon(pokemonId);
-                        } else {
-                            return false
                         }
                     }}>Next Pokemon</button>
                 </div>
                 <div className="moves">
-                    {/* filter within map */}
-                    {/* {
-                        moves.map(move => {
+                    { moves ?
+                        moves.map((move) => {
                             return (
-                                <div key={move.id}>{move.move.name}</div>
+                                <div className="individualMove" key={move.name}>{move.move.name[0].toUpperCase() + move.move.name.slice(1)}</div>
                             )
                         })
-                    } */}
-                    Pokemon Moves to be labeled here:
-                    1:
-                    2: 
-                    3: 
-                    4:
+                    : null
+                    }
                 </div>
             </div>
 
@@ -199,7 +189,7 @@ const Pokedex = () => {
                 <div id="generationButtons">
                     {/* add fetchPokemon() to each of the buttons */}
                     <button className="generationButtonsClass" id="generation1" onClick={() => {
-                        setPokemonId(initialPokemonId)
+                        setPokemonId(1);
                         setSearchParams({searchTerm: 1});
                     }}>Generation 1</button>
                     <button className="generationButtonsClass" id="generation2" onClick={() => {

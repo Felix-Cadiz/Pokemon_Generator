@@ -5,7 +5,7 @@ import "./Pokedex.css"
 const Pokedex = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
-    const searchTerm = searchParams.get("searchTerm")
+    const searchTerm = (searchParams.get("searchTerm") || "")
     
     const [pokemonId, setPokemonId] = useState(Number(searchTerm || 1));
     const [name, setName] = useState();
@@ -138,7 +138,7 @@ const Pokedex = () => {
                     <img id="pokemonImage" src={image} alt={name}></img>
                     <div id="pokemonName">#{pokemonId} {name}</div>
                 </div>
-                <button id="randomPokemon" onClick={() => {
+                <button className="randomPokemon" onClick={() => {
                     handleRandomPokemon()
                     }}>Random Pokemon</button>
 
@@ -163,12 +163,14 @@ const Pokedex = () => {
                             fetchPokemon(pokemonId);
                         }
                     }}>Next Pokemon</button>
-                </div>
+                </div> 
                 <div className="moves">
                     { moves ?
                         moves.map((move) => {
                             return (
-                                <div className="individualMove" key={move.name}>{move.move.name[0].toUpperCase() + move.move.name.slice(1)}</div>
+                                <div key={move.move.name} >
+                                    <div className="individualMove">{move.move.name[0].toUpperCase() + move.move.name.slice(1)}</div>
+                                </div>
                             )
                         })
                     : null

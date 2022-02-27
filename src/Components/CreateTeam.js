@@ -4,10 +4,11 @@ import "./CreateTeam.css"
 
 const CreateTeam = () => {
 
-    const [type, setType] = useState(1);
+    const [type, setType] = useState();
     const [typeOptions, setTypeOptions] = useState();
 
     const typeURL = `https://pokeapi.co/api/v2/type/`
+    const specificTypeURL = `https://pokeapi.co/api/v2/type/normal`
 
     const fetchTypes = async () => {
 
@@ -15,14 +16,14 @@ const CreateTeam = () => {
             const response = await fetch(typeURL)
             const result = await response.json()
             const specificTypes = result.results
-            console.log(result)
-            console.log(specificTypes)
             const individualType = specificTypes.map((specificType) => {
-                return specificType.name
+                return specificType.name[0].toUpperCase() + specificType.name.slice(1);
             })
-            console.log(individualType)
             setTypeOptions(individualType)
 
+            const specificPokemonType = await fetch(specificTypeURL)
+            const specificPokemonTypeResult = await specificPokemonType.json()
+            console.log(specificPokemonTypeResult.pokemon)
 
         } catch (error) {
             throw error
@@ -31,12 +32,20 @@ const CreateTeam = () => {
 
     useEffect(fetchTypes, [])
 
+    const handleTypeSelection = async () => {
+        console.log("here")
+        console.log(type)
+    }
+
     return <>
     
     <h1> Sup CreateTeam</h1>
 
     <button> Random Team </button>
-    <Dropdown options={typeOptions} placeholder="Gym Leader"></Dropdown>
+    <Dropdown options={typeOptions} className="gymLeader" placeholder="Gym Leader" onChange={() => {
+        
+        handleTypeSelection();
+    }}></Dropdown>
 
     <div className="body">
             <div className="container" onClick={() => {

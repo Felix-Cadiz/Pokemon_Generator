@@ -5,6 +5,10 @@
     margin: 5vh;
 }
 
+.gymLeader {
+    border: 3px solid black;
+}
+
 .pokeball {
     width: 20vh;
     height: 20vh;

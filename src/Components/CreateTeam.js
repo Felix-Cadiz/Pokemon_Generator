@@ -1,11 +1,13 @@
 import {React, useEffect, useState} from "react";
-import Dropdown from "react-dropdown";
+import Select from "react-select"
+import Dropdown from "react-dropdown"
 import "./CreateTeam.css"
 
 const CreateTeam = () => {
 
     const [type, setType] = useState();
     const [typeOptions, setTypeOptions] = useState();
+    const [selectedType, setSelectedType] = useState(null);
 
     const typeURL = `https://pokeapi.co/api/v2/type/`
     const specificTypeURL = `https://pokeapi.co/api/v2/type/normal`
@@ -34,8 +36,11 @@ const CreateTeam = () => {
 
     const handleTypeSelection = async () => {
         console.log("here")
+        // setType must be set to selected option value
         console.log(type)
     }
+
+
 
     return <>
     
@@ -44,8 +49,9 @@ const CreateTeam = () => {
     <button> Random Team </button>
     <Dropdown options={typeOptions} className="gymLeader" placeholder="Gym Leader" onChange={() => {
         
+        // console.log(typeOptions)
         handleTypeSelection();
-    }}></Dropdown>
+    }}/>
 
     <div className="body">
             <div className="container" onClick={() => {

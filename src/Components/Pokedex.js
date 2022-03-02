@@ -33,15 +33,18 @@ const Pokedex = () => {
         } 
 
         try {
+            // Resets direction and shiny status
             setIsShiny(false);
             setFace(true);
+
+            // Fetches Pokemon data
             const response = await fetch(baseURL);
             const result = await response.json();
             const resultName = result.name;
             const name = resultName[0].toUpperCase() + resultName.slice(1);
             setName(name);
 
-
+            // State for Images
             const baseImage = result.sprites.front_default;
             setBaseImage(baseImage)
             setImage(baseImage);
@@ -55,7 +58,7 @@ const Pokedex = () => {
             const shinyBackImage = result.sprites.back_shiny;
             setShinyBackImage(shinyBackImage)
             
-
+            // State for general information
             const resultMoves = result.moves;
             const slicedMoves = resultMoves.slice(0, 4)
             setMoves(slicedMoves)
@@ -123,17 +126,8 @@ const Pokedex = () => {
     useEffect(fetchPokemon, [pokemonId])  
 
     return <>
-        <h1> Sup Pokedex</h1>
         <div id="pokedex">
             <div id="leftPokedex">
-                <div>
-                    <div className="blinkers">
-                        <div className="bigBlink">BigBlue</div>
-                        <div className="redBlink">Red</div>
-                        <div className="yellowBlink">Yellow</div>
-                        <div className="blueBlink">Blue</div>
-                    </div>
-                </div>
                 <div className="pokemonDisplay">
                     <img id="pokemonImage" src={image} alt={name}></img>
                     <div id="pokemonName">#{pokemonId} {name}</div>
@@ -149,14 +143,14 @@ const Pokedex = () => {
                         setSearchParams({searchTerm: event.target.value})
                         fetchPokemon()
                     }}/>
-                    <button id="previousButton" onClick={() => {
+                    <button className="previousButton navButton" onClick={() => {
                         if (pokemonId > 1) {
                             setPokemonId(pokemonId - 1)
                             setSearchParams({searchTerm: pokemonId - 1});
                             fetchPokemon(pokemonId);
                         } 
                     }}>Previous Pokemon</button>
-                    <button id="nextButton" onClick={() => {
+                    <button className="nextButton navButton" onClick={() => {
                         if (pokemonId < 898) {
                             setPokemonId(Number(pokemonId) + 1);
                             setSearchParams({searchTerm: Number(pokemonId) + 1});

@@ -34,6 +34,7 @@
     height: 40%;
     width: 55%;
     border: 20px solid #dedede;
+    border-radius: 5%;
 }
 
 #pokemonImage {
@@ -43,6 +44,7 @@
 
 .randomPokemon {
     margin-top: 1vh;
+    box-shadow: 2px 2px 2px black;
 }
 
 .navigation {
@@ -51,15 +53,16 @@
     margin-top: 1vh;
 }
 
-#previousButton {
-
+.navButton {
     background-color: yellow;
     color: red;
+    box-shadow: 2px 1px 1px black;
 }
 
-#nextButton {
-    background-color: yellow;
-    color: red
+.navButton:hover{
+    background-color: #51AE5F;
+    color: black;
+    transition: all 1s ease;
 }
 
 .description {
@@ -82,12 +85,10 @@
 }
 
 #type1 {
-    border: 1px solid #232323;
     padding: 2%;
 }
 
 #type2 {
-    border: 1px solid #232323;
     padding: 2%;
 }
 
@@ -153,6 +154,12 @@
     box-shadow: 5px 3px 3px black;
 }
 
+.shinyToggle:hover {
+    background-color: #29AAFD;
+    color: white;
+    transition: all 1s ease;
+}
+
 .detailsContainer {
     display: flex;
     justify-content: space-between;
@@ -171,24 +178,3 @@
     border-radius: 1vh;
     text-align: center;
 }
-
-/* .typewriter {
-    overflow: hidden;
-    border-right: .15em solid orange;
-    white-space: wrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation: 
-        typing 3.5s steps(40, end),
-        blink-caret .75s step-end infinite;
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: orange }
-} */
